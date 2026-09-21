@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#05040f">
+<title>Flores Amarillas para Janeth 🌼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --oro-1:#ffe066;
+    --oro-2:#ffc93c;
+    --oro-3:#ffb703;
+    --rosa:#ff6b9d;
+    --noche-1:#05040f;
+    --noche-2:#0d0b2b;
+    --noche-3:#1a1547;
+    --texto-claro:#fff3d6;
+    --papel-1:#fdf6e3;
+    --papel-2:#f3e5bf;
+    --tinta:#5a4326;
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+
+  :root{
+    padding-top:env(safe-area-inset-top, 0px);
+    padding-bottom:env(safe-area-inset-bottom, 0px);
+  }
+
+  html,body{
+    margin:0;
+    padding:0;
+    min-height:100vh;
+    width:100%;
+    overflow-x:hidden;
+    font-family:'Poppins', sans-serif;
+    font-size:clamp(14px, 3.6vw, 17px);
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(255,201,60,0.08), transparent 55%),
+      radial-gradient(ellipse at 80% 85%, rgba(255,107,157,0.10), transparent 55%),
+      linear-gradient(180deg, var(--noche-1) 0%, var(--noche-2) 55%, var(--noche-3) 100%);
+    background-attachment:fixed;
+    color:var(--texto-claro);
+    position:relative;
+  }
+
+  /* ---------- ICONOS SVG REUTILIZABLES ---------- */
+  .biblioteca-svg{ position:absolute; width:0; height:0; overflow:hidden; }
+
+  .svg-flor, .svg-corazon{
+    width:100%;
+    height:100%;
+    display:block;
+  }
+
+  /* ---------- ESTRELLAS ---------- */
+  .estrellas{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+
+  .estrella{
+    position:absolute;
+    width:2px; height:2px;
+    background:#fff;
+    border-radius:50%;
+    animation:titilar linear infinite;
+    box-shadow:0 0 4px 1px rgba(255,255,255,0.6);
+  }
+
+  @keyframes titilar{
+    0%,100%{ opacity:0.15; transform:scale(1);}
+    50%{ opacity:1; transform:scale(1.4);}
+  }
+
+  .luna{
+    position:fixed; top:6%; right:8%;
+    width:clamp(42px, 9vw, 70px); height:clamp(42px, 9vw, 70px);
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #fffdf0, var(--oro-1) 70%);
+    box-shadow:0 0 40px 12px rgba(255,224,102,0.35);
+    z-index:0; pointer-events:none;
+  }
+
+  /* ---------- FONDO ANIMADO (flores/corazones) ---------- */
+  .cielo{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:1; }
+
+  .flower, .heart{
+    position:absolute;
+    top:-10%;
+    user-select:none;
+    animation-name:caer;
+    animation-timing-function:linear;
+    animation-iteration-count:infinite;
+    will-change:transform;
+    filter:drop-shadow(0 0 6px rgba(255,201,60,0.45));
+  }
+
+  @keyframes caer{
+    0%{ transform:translateY(-10vh) translateX(0) rotate(0deg); opacity:0.95;}
+    100%{ transform:translateY(110vh) translateX(var(--drift,20px)) rotate(360deg); opacity:0.85;}
+  }
+
+  /* ---------- CANVAS FUEGOS ARTIFICIALES ---------- */
+  #fuegos{ position:fixed; inset:0; z-index:5; pointer-events:none; }
+
+  /* ---------- ESCENA REGALO ---------- */
+  .escena-regalo{
+    position:relative; z-index:3;
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:30px 20px;
+    transition:opacity .9s ease, transform .9s ease, visibility .9s;
+  }
+
+  .escena-regalo.oculto{
+    opacity:0; transform:scale(0.85); visibility:hidden;
+    pointer-events:none; position:absolute; inset:0;
+  }
+
+  .titulo-regalo{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:clamp(1.7rem, 5.5vw, 2.5rem);
+    color:var(--oro-1);
+    text-shadow:0 0 18px rgba(255,201,60,0.5);
+    margin-bottom:8px;
+  }
+
+  .subtitulo-regalo{
+    font-size:0.85rem; letter-spacing:4px; text-transform:uppercase;
+    color:#c9b98a; margin-bottom:40px;
+  }
+
+  .caja-regalo{
+    background:none; border:none; cursor:pointer;
+    font-size:clamp(4rem, 22vw, 6.5rem); line-height:1;
+    filter:drop-shadow(0 0 25px rgba(255,201,60,0.55));
+    animation:flotar 3s ease-in-out infinite;
+    transition:transform .25s ease;
+    padding:0;
+  }
+
+  .caja-regalo:hover{ transform:scale(1.08) rotate(-3deg); }
+  .caja-regalo:active{ transform:scale(0.94); }
+
+  @keyframes flotar{
+    0%,100%{ transform:translateY(0) rotate(-2deg);}
+    50%{ transform:translateY(-14px) rotate(2deg);}
+  }
+
+  .texto-presiona{
+    margin-top:28px; font-size:1.15rem; font-weight:500;
+    color:var(--texto-claro); letter-spacing:0.5px;
+  }
+
+  .texto-presiona .brillo{ color:var(--oro-1); text-shadow:0 0 12px rgba(255,201,60,0.7); }
+
+  .anillo-pulso{
+    position:absolute; width:clamp(120px, 40vw, 180px); height:clamp(120px, 40vw, 180px); border-radius:50%;
+    border:2px solid rgba(255,201,60,0.35);
+    animation:pulso 2.4s ease-out infinite;
+    z-index:-1;
+  }
+
+  @keyframes pulso{
+    0%{ transform:scale(0.6); opacity:0.9;}
+    100%{ transform:scale(1.9); opacity:0;}
+  }
+
+  /* ---------- ESCENA SOBRE (CARTA) ---------- */
+  .escena-sobre{
+    position:fixed; inset:0; z-index:4;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity .7s ease;
+    perspective:900px;
+  }
+
+  .escena-sobre.mostrar{ opacity:1; visibility:visible; }
+  .escena-sobre.desvanecer{ opacity:0; }
+
+  .sobre{
+    position:relative;
+    width:min(74vw, 260px);
+    height:min(50vw, 175px);
+  }
+
+  .sobre-cuerpo{
+    position:absolute; inset:0;
+    background:linear-gradient(160deg, var(--papel-1), var(--papel-2));
+    border-radius:8px;
+    box-shadow:0 25px 55px rgba(0,0,0,0.55);
+    overflow:hidden;
+  }
+
+  .sobre-cuerpo::before{
+    content:'';
+    position:absolute; left:0; right:0; bottom:0; height:65%;
+    background:
+      linear-gradient(135deg, transparent 49.5%, rgba(150,110,30,0.16) 50.5%),
+      linear-gradient(45deg, transparent 49.5%, rgba(150,110,30,0.16) 50.5%);
+    background-size:50% 100%;
+    background-position:left bottom, right bottom;
+    background-repeat:no-repeat;
+  }
+
+  .sobre-solapa{
+    position:absolute; top:0; left:0; right:0; height:65%;
+    background:linear-gradient(160deg, var(--papel-2), #dcb968);
+    clip-path:polygon(0 0, 100% 0, 50% 100%);
+    transform-origin:top center;
+    transform:rotateX(0deg);
+    transition:transform 1.1s cubic-bezier(.6,.1,.3,1);
+    box-shadow:0 6px 14px rgba(0,0,0,0.3);
+    z-index:3;
+    backface-visibility:hidden;
+  }
+
+  .sobre.abierto .sobre-solapa{ transform:rotateX(-180deg); }
+
+  .sello{
+    position:absolute; top:16%; left:50%; transform:translate(-50%,0);
+    width:20%; aspect-ratio:1/1;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--rosa), #b8355f 75%);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 10px rgba(0,0,0,0.35);
+    z-index:4;
+    padding:6px;
+  }
+
+  .sello .svg-flor{ filter:brightness(2.4) saturate(0); }
+
+  /* ---------- TARJETA / CARTA DE MENSAJE ---------- */
+  .contenedor{
+    position:relative; z-index:3;
+    max-width:640px;
+    width:min(92vw, 640px);
+    margin:6vh auto 8vh;
+    padding:clamp(38px, 8vw, 56px) clamp(18px, 6vw, 38px) clamp(30px, 6vw, 46px);
+    background:
+      repeating-linear-gradient(180deg, rgba(150,110,30,0.05) 0px, rgba(150,110,30,0.05) 1px, transparent 1px, transparent 34px),
+      linear-gradient(160deg, var(--papel-1), var(--papel-2));
+    border-radius:4px 4px 22px 22px;
+    box-shadow:0 30px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(150,110,30,0.25) inset;
+    text-align:center;
+    display:none;
+    opacity:0;
+    transform:translateY(60px) scale(0.55);
+    transition:opacity 1s cubic-bezier(.2,.7,.3,1), transform 1s cubic-bezier(.2,.7,.3,1);
+  }
+
+  .contenedor.mostrar{ display:block; }
+  .contenedor.visible{ opacity:1; transform:translateY(0) scale(1); }
+
+  .contenedor::after{
+    content:'';
+    position:absolute; top:0; right:0;
+    width:0; height:0;
+    border-style:solid;
+    border-width:0 34px 34px 0;
+    border-color:transparent #e4cd8f transparent transparent;
+    filter:drop-shadow(-3px 3px 3px rgba(0,0,0,0.25));
+  }
+
+  .sello-carta{
+    position:absolute; top:-28px; left:50%; transform:translateX(-50%);
+    width:56px; height:56px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--rosa), #b8355f 75%);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 14px rgba(0,0,0,0.4), 0 0 0 4px rgba(255,255,255,0.15) inset;
+    padding:11px;
+  }
+
+  .sello-carta .svg-flor{ filter:brightness(2.4) saturate(0); }
+
+  .fila-flores{
+    display:flex; justify-content:center; align-items:flex-end;
+    gap:6px; margin-bottom:6px;
+  }
+
+  .fila-flores .icono-flor{ width:34px; height:40px; }
+  .fila-flores .icono-flor:nth-child(2n){ transform:rotate(-8deg) translateY(-3px); }
+  .fila-flores .icono-flor:nth-child(3n){ transform:rotate(8deg); }
+
+  h1{
+    font-family:'Playfair Display', serif;
+    font-weight:800;
+    font-size:clamp(1.9rem, 5.5vw, 2.7rem);
+    color:#a8710f;
+    margin:6px 0 4px;
+    line-height:1.25;
+  }
+
+  .subtitulo{
+    font-size:0.82rem; letter-spacing:3px; text-transform:uppercase;
+    color:#9c8354; margin-bottom:20px; font-weight:600;
+  }
+
+  .nombre{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-style:italic;
+    font-size:clamp(2.1rem, 9vw, 3.4rem);
+    color:#c2185b;
+    margin:6px 0 22px;
+    display:inline-flex;
+    align-items:center;
+    gap:0.25em;
+    max-width:100%;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
+  .corazon-nombre{
+    display:inline-block;
+    font-size:0.5em;
+    animation:latir 1.4s ease-in-out infinite;
+  }
+
+  @keyframes latir{
+    0%,100%{ transform:scale(1);}
+    50%{ transform:scale(1.25);}
+  }
+
+  .mensaje{
+    font-size:1.06rem; line-height:1.9;
+    color:var(--tinta);
+    margin:0 auto 24px;
+    max-width:520px;
+    text-align:left;
+  }
+
+  .mensaje strong{ color:#c2185b; }
+
+  .fila-flores-final{
+    display:flex; justify-content:center; align-items:flex-end;
+    gap:4px; margin:20px 0 6px;
+  }
+
+  .fila-flores-final .icono-flor{ width:30px; height:36px; }
+  .fila-flores-final .icono-flor:nth-child(odd){ transform:rotate(-6deg); }
+  .fila-flores-final .icono-flor:nth-child(even){ transform:rotate(6deg) translateY(-4px); }
+
+  .firma{
+    margin-top:24px;
+    font-family:'Playfair Display', serif;
+    font-style:italic; font-weight:600;
+    font-size:1.4rem; color:#a8710f;
+  }
+
+  .fecha{
+    margin-top:6px; font-size:0.78rem;
+    color:#a89468; letter-spacing:1px;
+  }
+
+  .hecho-por{
+    margin-top:18px; font-size:0.72rem;
+    color:#c2a878; letter-spacing:0.5px;
+    opacity:0.85;
+  }
+
+  .boton{
+    margin-top:26px; padding:13px 32px; border:none; border-radius:50px;
+    background:linear-gradient(120deg, var(--rosa), #ff9fc4);
+    color:#2b0a17; font-family:'Poppins', sans-serif;
+    font-weight:600; font-size:0.92rem; letter-spacing:0.5px;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(255,107,157,0.35);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+
+  .boton:hover{ transform:translateY(-3px) scale(1.03); box-shadow:0 14px 32px rgba(255,107,157,0.5); }
+  .boton:active{ transform:translateY(0) scale(0.98); }
+
+  .sorpresa{
+    font-size:1rem; color:#b8355f; font-weight:500;
+    max-width:480px; margin-left:auto; margin-right:auto;
+    opacity:0; max-height:0; overflow:hidden;
+    transition:opacity .6s ease, max-height .6s ease, margin .6s ease;
+  }
+
+  .sorpresa.visible{ opacity:1; max-height:200px; margin-top:20px; }
+
+  @media (max-width:480px){
+    .contenedor{ margin:4vh 10px 6vh;}
+    .fila-flores .icono-flor{ width:28px; height:33px;}
+    .fila-flores-final .icono-flor{ width:24px; height:29px;}
+  }
+
+  @media (min-width:900px){
+    .contenedor{ padding-left:56px; padding-right:56px;}
+  }
+
+  /* ---------- GLOBITOS DE FRASES ---------- */
+  .capa-globos{
+    position:fixed;
+    inset:0;
+    z-index:6;
+    pointer-events:none;
+    overflow:hidden;
+  }
+
+  .globo{
+    position:absolute;
+    bottom:-12vh;
+    pointer-events:none;
+    padding:9px 16px;
+    max-width:min(62vw, 210px);
+    width:max-content;
+    border-radius:20px;
+    background:linear-gradient(135deg, #ffe6f2, #ffc2dd);
+    color:#9c2f63;
+    font-family:'Poppins', sans-serif;
+    font-weight:600;
+    font-size:clamp(0.7rem, 2.6vw, 0.85rem);
+    line-height:1.3;
+    text-align:center;
+    white-space:normal;
+    box-shadow:0 8px 22px rgba(0,0,0,0.3), 0 0 16px rgba(255,182,213,0.4);
+    border:1px solid rgba(255,255,255,0.65);
+    animation-name:flotarGlobo;
+    animation-timing-function:ease-in-out;
+    animation-fill-mode:forwards;
+  }
+
+  .globo::after{
+    content:'';
+    position:absolute;
+    bottom:-7px; left:24px;
+    width:14px; height:14px;
+    background:#ffc2dd;
+    clip-path:polygon(0 0, 100% 0, 0 100%);
+    border-radius:0 0 0 5px;
+  }
+
+  @keyframes flotarGlobo{
+    0%{ transform:translate(0,0) rotate(-3deg); opacity:0;}
+    8%{ opacity:1;}
+    30%{ transform:translate(var(--sway1,15px), -35vh) rotate(3deg);}
+    60%{ transform:translate(var(--sway2,-15px), -70vh) rotate(-3deg);}
+    88%{ opacity:1;}
+    100%{ transform:translate(0, -118vh) rotate(0deg); opacity:0;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ICONOS SVG (flor y corazón dibujados, no emoji) -->
+<svg class="biblioteca-svg" aria-hidden="true">
+  <defs>
+    <symbol id="flor-svg" viewBox="0 0 64 70">
+      <line x1="32" y1="40" x2="32" y2="68" stroke="#4a7c3f" stroke-width="3" stroke-linecap="round"/>
+      <path d="M32 52 C24 56 18 56 12 61" stroke="#4a7c3f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M32 46 C40 50 46 50 52 55" stroke="#4a7c3f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <g>
+        <ellipse cx="32" cy="16" rx="9" ry="13" fill="#ffd93b"/>
+        <ellipse cx="32" cy="16" rx="9" ry="13" fill="#ffd93b" transform="rotate(72 32 32)"/>
+        <ellipse cx="32" cy="16" rx="9" ry="13" fill="#ffd93b" transform="rotate(144 32 32)"/>
+        <ellipse cx="32" cy="16" rx="9" ry="13" fill="#ffd93b" transform="rotate(216 32 32)"/>
+        <ellipse cx="32" cy="16" rx="9" ry="13" fill="#ffd93b" transform="rotate(288 32 32)"/>
+      </g>
+      <circle cx="32" cy="32" r="8.5" fill="#c9860b"/>
+      <circle cx="29" cy="29" r="2" fill="#e9ac2f"/>
+    </symbol>
+    <symbol id="corazon-svg" viewBox="0 0 64 58">
+      <path d="M32 57.35l-3.6-3.28C15.36 43.6 6 35.1 6 24.5 6 16.6 12.2 10.4 20.1 10.4c4.6 0 9 2.15 11.9 5.52 2.9-3.37 7.3-5.52 11.9-5.52 7.9 0 14.1 6.2 14.1 14.1 0 10.6-9.36 19.1-22.4 29.57L32 57.35z" fill="#ff6b9d"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="estrellas" id="estrellas"></div>
+<div class="luna"></div>
+<div class="cielo" id="cielo"></div>
+<canvas id="fuegos"></canvas>
+<div class="capa-globos" id="capaGlobos"></div>
+
+<!-- ESCENA 1: REGALO -->
+<div class="escena-regalo" id="escenaRegalo">
+  <div class="titulo-regalo">Día de las Flores Amarillas</div>
+  <div class="subtitulo-regalo">Tengo un regalito para ti</div>
+
+  <div style="position:relative; display:flex; align-items:center; justify-content:center;">
+    <div class="anillo-pulso"></div>
+    <button class="caja-regalo" id="botonRegalo" aria-label="Abrir regalo">🎁</button>
+  </div>
+
+  <div class="texto-presiona">Presiona el regalo para <span class="brillo">abrirlo</span> ✨</div>
+</div>
+
+<!-- ESCENA 2: SOBRE / CARTA CERRADA -->
+<div class="escena-sobre" id="escenaSobre">
+  <div class="sobre" id="sobre">
+    <div class="sobre-cuerpo"></div>
+    <div class="sobre-solapa">
+      <div class="sello"><svg class="svg-flor"><use href="#flor-svg"></use></svg></div>
+    </div>
+  </div>
+</div>
+
+<!-- ESCENA 3: CARTA ABIERTA CON EL MENSAJE -->
+<div class="contenedor" id="contenedorMensaje">
+  <div class="sello-carta"><svg class="svg-flor"><use href="#flor-svg"></use></svg></div>
+
+  <div class="fila-flores">
+    <svg class="icono-flor"><use href="#flor-svg"></use></svg>
+    <svg class="icono-flor"><use href="#flor-svg"></use></svg>
+    <svg class="icono-flor"><use href="#flor-svg"></use></svg>
+  </div>
+
+  <h1>Flores amarillas para ti</h1>
+  <div class="subtitulo" style="text-align:center;">21 de septiembre</div>
+
+  <div style="text-align:center;"><span class="nombre">Janeth <span class="corazon-nombre">💛</span></span></div>
+
+  <p class="mensaje">
+    Hoy es el día de las flores amarillas y no se me ocurrió nadie más
+    lindo para dedicárselo que a ti. No es tu cumpleaños ni nada especial
+    en el calendario, pero contigo cualquier día es buena excusa para
+    decirte lo mucho que <strong>te amo</strong>.
+  </p>
+
+  <p class="mensaje">
+    Gracias por tu risa, por tus locuras, por aguantarme y por dejarme
+    quererte tanto. Eres mi persona favorita, Eres tu preciosa. 💛
+  </p>
+
+  <div class="fila-flores-final">
+    <svg class="icono-flor"><use href="#flor-svg"></use></svg>
+    <svg class="icono-flor"><use href="#flor-svg"></use></svg>
+    <svg class="icono-flor"><use href="#flor-svg"></use></svg>
+    <svg class="icono-flor"><use href="#flor-svg"></use></svg>
+    <svg class="icono-flor"><use href="#flor-svg"></use></svg>
+  </div>
+
+  <div style="text-align:center;">
+    <button class="boton" onclick="mostrarSorpresa()">Más sorpresas 💛✨</button>
+  </div>
+
+  <div class="sorpresa" id="sorpresa" style="text-align:center;">
+    Cada flor y cada luz que ves aquí son un pedacito de lo mucho
+    que te quiero. Eres lo mejor que me ha pasado, Janeth 💛🌼
+  </div>
+
+  <div style="text-align:center;">
+    <div class="firma">Te quiero un montón 💛</div>
+    <div class="fecha">Día de las Flores Amarillas</div>
+    <div class="hecho-por">Hecho con 💛 por Josué</div>
+  </div>
+</div>
+
+<script>
+  /* ---------- ESTRELLAS DE FONDO ---------- */
+  const cajaEstrellas = document.getElementById('estrellas');
+  for(let i=0;i<120;i++){
+    const e = document.createElement('div');
+    e.className = 'estrella';
+    e.style.left = Math.random()*100 + 'vw';
+    e.style.top = Math.random()*100 + 'vh';
+    e.style.animationDuration = (1.5 + Math.random()*3) + 's';
+    e.style.animationDelay = (Math.random()*3) + 's';
+    cajaEstrellas.appendChild(e);
+  }
+
+  /* ---------- FLORES / CORAZONES CAYENDO (SVG, no emoji) ---------- */
+  const cielo = document.getElementById('cielo');
+  let intervaloAmbiente = null;
+
+  const tonosFlor = [
+    'hue-rotate(0deg) brightness(1)',
+    'hue-rotate(-18deg) brightness(1.05)',
+    'hue-rotate(20deg) brightness(0.95)',
+    'hue-rotate(300deg) brightness(1.15) saturate(0.7)'
+  ];
+  const tonosCorazon = [
+    'hue-rotate(0deg)',
+    'hue-rotate(-25deg)',
+    'hue-rotate(30deg) saturate(1.3)'
+  ];
+
+  function crearElemento(){
+    const esFlor = Math.random() > 0.35;
+    const el = document.createElement('span');
+    el.className = esFlor ? 'flower' : 'heart';
+
+    const tamano = 20 + Math.random()*26;
+    const izquierda = Math.random()*100;
+    const duracion = 7 + Math.random()*8;
+    const deriva = (Math.random()*160 - 80) + 'px';
+
+    el.style.left = izquierda + 'vw';
+    el.style.width = tamano + 'px';
+    el.style.height = (esFlor ? tamano*1.1 : tamano*0.9) + 'px';
+    el.style.setProperty('--drift', deriva);
+    el.style.animationDuration = duracion + 's';
+
+    if(esFlor){
+      el.style.filter += ' ' + tonosFlor[Math.floor(Math.random()*tonosFlor.length)];
+      el.innerHTML = '<svg class="svg-flor"><use href="#flor-svg"></use></svg>';
+    } else {
+      el.style.filter += ' ' + tonosCorazon[Math.floor(Math.random()*tonosCorazon.length)];
+      el.innerHTML = '<svg class="svg-corazon"><use href="#corazon-svg"></use></svg>';
+    }
+
+    cielo.appendChild(el);
+    setTimeout(() => el.remove(), duracion*1000 + 500);
+  }
+
+  function iniciarAmbiente(){
+    if(intervaloAmbiente) return;
+    intervaloAmbiente = setInterval(crearElemento, 400);
+    for(let i=0;i<10;i++){ setTimeout(crearElemento, i*220); }
+    iniciarGlobitos();
+  }
+
+  function mostrarSorpresa(){
+    document.getElementById('sorpresa').classList.add('visible');
+    for(let i=0;i<16;i++){ setTimeout(crearElemento, i*60); }
+    lanzarRafagaFuegos(3);
+    for(let i=0;i<4;i++){ setTimeout(crearGlobito, i*250); }
+  }
+
+  /* ---------- GLOBITOS CON FRASES LINDAS ---------- */
+  const frasesLindas = [
+    'Te amo 💛',
+    'Eres mi luz ✨',
+    'Contigo todo es mejor',
+    'Mi persona favorita',
+    'Te quiero montones 💛',
+    'Eres especial 💫',
+    'Gracias por existir',
+    'Mereces lo mejor 🌟',
+    'Mi flor favorita 🌼',
+    'Siempre tú 💛'
+  ];
+
+  let intervaloGlobitos = null;
+  const capaGlobos = document.getElementById('capaGlobos');
+
+  function crearGlobito(){
+    const el = document.createElement('div');
+    el.className = 'globo';
+    el.textContent = frasesLindas[Math.floor(Math.random()*frasesLindas.length)];
+
+    const izquierda = 6 + Math.random()*50;
+    const duracion = 11 + Math.random()*6;
+
+    el.style.left = izquierda + 'vw';
+    el.style.setProperty('--sway1', (Math.random()*40 - 20) + 'px');
+    el.style.setProperty('--sway2', (Math.random()*40 - 20) + 'px');
+    el.style.animationDuration = duracion + 's';
+
+    capaGlobos.appendChild(el);
+    setTimeout(() => el.remove(), duracion*1000 + 300);
+  }
+
+  function iniciarGlobitos(){
+    if(intervaloGlobitos) return;
+    intervaloGlobitos = setInterval(crearGlobito, 2600);
+    setTimeout(crearGlobito, 800);
+  }
+
+  /* ---------- FUEGOS ARTIFICIALES (CANVAS) ---------- */
+  const canvas = document.getElementById('fuegos');
+  const ctx = canvas.getContext('2d');
+  let particulas = [];
+  let animando = false;
+
+  function ajustarCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  ajustarCanvas();
+  window.addEventListener('resize', ajustarCanvas);
+
+  const coloresFuego = ['#ffe066','#ffc93c','#ff6b9d','#ff9fc4','#fff3d6','#ffb703','#ffffff'];
+
+  function crearExplosion(x, y){
+    const numParticulas = 55 + Math.floor(Math.random()*25);
+    const color = coloresFuego[Math.floor(Math.random()*coloresFuego.length)];
+    for(let i=0;i<numParticulas;i++){
+      const angulo = (Math.PI*2) * (i/numParticulas);
+      const velocidad = 2 + Math.random()*4.5;
+      particulas.push({
+        x, y,
+        vx: Math.cos(angulo)*velocidad,
+        vy: Math.sin(angulo)*velocidad,
+        vida: 1,
+        decaimiento: 0.008 + Math.random()*0.012,
+        color: Math.random() > 0.25 ? color : '#ffffff',
+        tamano: 1.5 + Math.random()*2
+      });
+    }
+  }
+
+  function animarParticulas(){
+    ctx.fillStyle = 'rgba(5,4,15,0.18)';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    particulas.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.045;
+      p.vida -= p.decaimiento;
+
+      ctx.globalAlpha = Math.max(p.vida, 0);
+      ctx.beginPath();
+      ctx.fillStyle = p.color;
+      ctx.shadowColor = p.color;
+      ctx.shadowBlur = 8;
+      ctx.arc(p.x, p.y, p.tamano, 0, Math.PI*2);
+      ctx.fill();
+    });
+
+    ctx.globalAlpha = 1;
+    particulas = particulas.filter(p => p.vida > 0);
+
+    if(particulas.length > 0 || animando){
+      requestAnimationFrame(animarParticulas);
+    } else {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+    }
+  }
+
+  function lanzarRafagaFuegos(cantidad){
+    let lanzados = 0;
+    const habiaParticulas = particulas.length > 0;
+    const intervalo = setInterval(() => {
+      const x = canvas.width * (0.15 + Math.random()*0.7);
+      const y = canvas.height * (0.15 + Math.random()*0.45);
+      crearExplosion(x, y);
+      if(!habiaParticulas && lanzados === 0){
+        requestAnimationFrame(animarParticulas);
+      }
+      lanzados++;
+      if(lanzados >= cantidad) clearInterval(intervalo);
+    }, 350);
+  }
+
+  /* ---------- SECUENCIA: REGALO -> FUEGOS -> SOBRE -> CARTA ---------- */
+  const escenaRegalo = document.getElementById('escenaRegalo');
+  const escenaSobre = document.getElementById('escenaSobre');
+  const sobre = document.getElementById('sobre');
+  const contenedorMensaje = document.getElementById('contenedorMensaje');
+  const botonRegalo = document.getElementById('botonRegalo');
+
+  botonRegalo.addEventListener('click', () => {
+    botonRegalo.disabled = true;
+    animando = true;
+
+    let explosiones = 0;
+    const maxExplosiones = 9;
+    const lanzador = setInterval(() => {
+      const x = canvas.width * (0.1 + Math.random()*0.8);
+      const y = canvas.height * (0.1 + Math.random()*0.5);
+      crearExplosion(x, y);
+      explosiones++;
+      if(explosiones === 1){ requestAnimationFrame(animarParticulas); }
+      if(explosiones >= maxExplosiones){
+        clearInterval(lanzador);
+        setTimeout(() => { animando = false; }, 1200);
+      }
+    }, 260);
+
+    escenaRegalo.classList.add('oculto');
+
+    setTimeout(() => {
+      escenaSobre.classList.add('mostrar');
+    }, 600);
+
+    setTimeout(() => {
+      sobre.classList.add('abierto');
+    }, 1500);
+
+    setTimeout(() => {
+      escenaSobre.classList.add('desvanecer');
+      contenedorMensaje.classList.add('mostrar');
+      requestAnimationFrame(() => {
+        contenedorMensaje.classList.add('visible');
+      });
+      iniciarAmbiente();
+      lanzarRafagaFuegos(2);
+    }, 2500);
+
+    setTimeout(() => {
+      escenaSobre.style.display = 'none';
+    }, 3300);
+  });
+</script>
+
+</body>
+</html>
